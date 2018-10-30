@@ -5,14 +5,14 @@
           管理员列表
         </div>
         <el-table :data="tableData" border>
-          <el-table-column label="姓名" prop="nickname"width="150px"></el-table-column>
-          <el-table-column label="手机" prop="phone"width="180px"></el-table-column>
+          <el-table-column label="姓名" prop="nickname"width="140px"></el-table-column>
+          <el-table-column label="手机" prop="phone"width="160px"></el-table-column>
           <el-table-column label="头像" prop="avatar"width="150px">
             <template slot-scope="scope">
               <img :src="scope.row.avatar" alt="" class="table-item-img">
             </template>
           </el-table-column>
-          <el-table-column label="性别" prop="sex" width="100px">
+          <el-table-column label="性别" prop="sex" width="80px">
             <template slot-scope="scope">
               {{scope.row.sex ? '男' : '女'}}
             </template>
@@ -41,7 +41,7 @@
       methods: {
         getData () {
           this.$axios.get('/admin/user').then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.code == 200) {
               this.tableData = res.data
             }

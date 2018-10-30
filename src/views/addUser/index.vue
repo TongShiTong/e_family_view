@@ -12,8 +12,10 @@
         <el-form-item label="证件号" required>
           <el-input v-model="formData.idnumber"></el-input>
         </el-form-item>
-        <el-form-item label="密码" required>
+        <el-form-item label="密码" required v-if="!isEdit">
           <el-input v-model="formData.password"></el-input>
+        </el-form-item>
+        <el-form-item v-else>
         </el-form-item>
         <el-form-item label="姓名">
           <el-input v-model="formData.nickname"></el-input>

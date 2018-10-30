@@ -92,6 +92,14 @@ export default new Router({
             title: '添加新闻'
           },
           component: () => import('@/views/addNews')
+        },
+        {
+          path: 'newsDetail/:id',
+          name: 'newsDetail',
+          meta: {
+            title: '添加新闻'
+          },
+          component: () => import('@/views/newsDetail')
         }
       ]
     }

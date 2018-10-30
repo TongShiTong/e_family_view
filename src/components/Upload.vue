@@ -30,7 +30,7 @@
     methods: {
       getToken() {
         axios.get('http://upload.yaojunrong.com/getToken').then(res => {
-          console.log(res)
+          // console.log(res)
           if(res.data.code == 200) {
             this.formData.token = res.data.data
           }

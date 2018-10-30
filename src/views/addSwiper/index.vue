@@ -98,7 +98,7 @@
         }
       },
       created() {
-        if (this.$route.name == 'swipperEdit'){
+        if (this.$route.name == 'swiperEdit'){
           this.isEdit = true
         } else {
           this.isEdit = false

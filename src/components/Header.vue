@@ -13,9 +13,9 @@
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>取消</el-dropdown-item>
         <el-dropdown-item>
-          <router-link to="/" style="color: #606266">
+          <div style="color: #606266" @click="handleLogout">
             退出登录
-          </router-link>
+          </div>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
@@ -24,7 +24,19 @@
 
 <script>
     export default {
-
+      methods: {
+        handleLogout() {
+          this.$axios.post('/admin/user/logout').then(res => {
+            if (res.code == 200) {
+              this.$message.success(res.msg)
+              this.$router.push('/')
+            } else {
+              this.$message.info(res.msg)
+              this.$router.push('/')
+            }
+          })
+        }
+      }
     }
 </script>
 

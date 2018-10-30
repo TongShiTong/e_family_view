@@ -12,16 +12,25 @@
         </el-table-column>
         <el-table-column label="新闻标题" prop="title" ></el-table-column>
         <el-table-column label="作者" prop="author.nickname" ></el-table-column>
-        <el-table-column label="排序" prop="sort" ></el-table-column>
+        <!--<el-table-column label="排序" prop="sort" ></el-table-column>-->
         <el-table-column label="分类"prop="type.title" >
         </el-table-column>
-        <!--<el-table-column label="操作" width="228px">-->
-          <!--<template slot-scope="scope">-->
+        <el-table-column label="操作" width="228px">
+          <template slot-scope="scope">
             <!--<el-button type="warning" @click="handleEdit(scope.row._id)">编辑</el-button>-->
-            <!--<el-button type="danger" @click="handledelete(scope.row._id)">删除</el-button>-->
-          <!--</template>-->
-        <!--</el-table-column>-->
+            <el-button type="primary" @click="handleDetail(scope.row._id)">查看详情</el-button>
+            <el-button type="danger" @click="handledelete(scope.row._id)">删除</el-button>
+          </template>
+        </el-table-column>
       </el-table>
+
+      <!--分页-->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="count"
+        @current-change="pageChange">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -31,43 +40,53 @@
     name: "index",
     data() {
       return {
-        newsData: []
+        newsData: [],
+        page: 1,
+        count: 0
       }
     },
     methods: {
       getData() {
-        this.$axios.get('/admin/news').then(res => {
+        this.$axios.get('/admin/news', {page: this.page, page_size: 5}).then(res => {
+          // console.log(res)
           if (res.code == 200) {
+            console.log(res)
             this.newsData = res.data
+            // this.count = res.data.length
+            console.log(this.count)
           } else {
             this.$message.error(res.msg)
           }
         })
       },
-      //   handleEdit(id) {
-      //     this.$router.push({path: 'swiperEdit', query: {id}})
-      //   }
-      // },
-      // handledelete(id) {
-      //   this.$confirm('此操作将永久删除该轮播图信息，是否继续?','警告',{
-      //     confirmButtonText:'确定',
-      //     cancelButtonText:'取消',
-      //     type:'warning'
-      //   }).then(res => {
-      //     this.$axios.delete(`/admin/swiper/delete/:${id}`).then(res => {
-      //       if (res.code == 200) {
-      //         this.$message.success(res.msg)
-      //         this.$router.push('/layout/swiperList')
-      //         this.getTableData()
-      //       }
-      //     }).catch(() => {
-      //       this.$message.info(res.msg)
-      //     })
-      //   })
-      // },
-      created() {
+      pageChange (page) {
+        this.page = page
         this.getData()
-      }
+      },
+
+      handleDetail(id) {
+       this.$router.push(`/layout/newsDetail/${id}`)
+      },
+      handledelete(id) {
+        this.$confirm('此操作将永久删除该新闻信息，是否继续?','警告',{
+          confirmButtonText:'确定',
+          cancelButtonText:'取消',
+          type:'warning'
+        }).then(res => {
+          this.$axios.delete(`/admin/news/:${id}`).then(res => {
+            if (res.code == 200) {
+              this.$message.success(res.msg)
+              this.$router.push('/layout/newsList')
+              this.getData()
+            }
+          }).catch(() => {
+            this.$message.info(res.msg)
+          })
+        })
+      },
+    },
+    created() {
+      this.getData()
     }
   }
 </script>
