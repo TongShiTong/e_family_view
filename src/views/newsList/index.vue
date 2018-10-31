@@ -52,7 +52,7 @@
           if (res.code == 200) {
             console.log(res)
             this.newsData = res.data
-            // this.count = res.data.length
+            this.count = res.count
             console.log(this.count)
           } else {
             this.$message.error(res.msg)
